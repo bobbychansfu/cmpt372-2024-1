@@ -26,7 +26,9 @@ export class PersonAddFormComponent {
 
   onSubmit(newPerson:any) {
     //console.log(newPerson)
-    this.ps.add(newPerson)
-    this.router.navigate(["/people"])
+    this.ps.add(newPerson).subscribe((data) => {
+      console.log(data)
+      this.router.navigate(["/people"])
+    })
   }
 }

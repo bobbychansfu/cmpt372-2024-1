@@ -48,6 +48,9 @@ export class PeopleListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.people = this.ps.get()
+      // this.people = this.ps.get()
+      this.ps.get().subscribe((data) => {
+        this.people = data as any[]
+      })
   }
 }
