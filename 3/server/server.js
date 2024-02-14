@@ -58,6 +58,7 @@ app.get('/https', (req, res) => {
         })
     })
 })
+*/
 
 // upload file
 app.post('/upload', (req, res) => {
@@ -65,14 +66,21 @@ app.post('/upload', (req, res) => {
     // store the file into the server
     let file = req.files.myImage.data
     let filename = path.join(__dirname,req.files.myImage.name)
-    fs.writeFileSync(filename, file)
+    // fs.writeFileSync(filename, file)
+    db.helpers.uploadFile(filename, file)
 })
-*/
+
+app.get('/viewimg', async (req, res) => {
+    var picture_obj = await db.helpers.getImage(1)
+    res.end(picture_obj.pic)
+        
+})
+
 
 // data
 var people = []
 
-// APIs
+// people API
 app.get('/people-api/all', async (req, res) => {
     let p = await db.helpers.getPeople()
     res.json(p)

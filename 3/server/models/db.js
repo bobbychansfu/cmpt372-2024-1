@@ -24,6 +24,16 @@ const helpers = {
     init: async function() {
         const q = 'CREATE TABLE IF NOT EXISTS people(id SERIAL PRIMARY KEY, name VARCHAR(50), age INT, instructor BOOLEAN)'
         const res = await pool.query(q)
+    },
+
+    uploadFile: async function(filename, pic) {
+        const q = 'INSERT INTO pics(filename, pic) VALUES($1, $2)'
+        const res = await pool.query(q, [filename, pic])
+    },
+
+    getImage: async function(id) {
+        const res = await pool.query('SELECT * FROM pics where pid=$1',[id])
+        return res.rows[0]
     }
 }   
 
