@@ -1,12 +1,11 @@
 
 const uri = "mongodb+srv://<your_DB_URL>";
 
-
 let MongoClient = require('mongodb').MongoClient;
 
 (async () => {
     // connecting to the database cmpt372, in the a collection called 'documents'
-    let client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    let client = await MongoClient.connect(uri);
     let db = client.db('cmpt372');
     const docs = db.collection("documents");
     
@@ -16,9 +15,9 @@ let MongoClient = require('mongodb').MongoClient;
 
     // search for all documents
     const cursor = docs.find();
-    await cursor.forEach((e)=>{
-      console.log(e);
-    });
+    for await (const doc of cursor) {
+      console.log(doc);
+    }
     
     client.close();
     process.exit(0)
