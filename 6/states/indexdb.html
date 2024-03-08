@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+        var open = indexedDB.open("MyDatabase")
+
+        open.onupgradeneeded = function(){
+            var db = open.result
+            var store = db.createObjectStore("MyNameStore", {keyPath: "id"})
+        }
+
+        open.onsuccess = function() {
+            var db = open.result
+            var tx = db.transaction("MyNameStore","readwrite")
+            var store = tx.objectStore("MyNameStore")
+
+            store.put({id:123456, name:"John", age: 45})
+            store.put({id:234567, name:"Jane", age: 45})
+
+            var x = store.get(123456)
+        }
+    </script>
+</body>
+</html>
